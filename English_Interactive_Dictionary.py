@@ -12,8 +12,10 @@ os.chdir(r'D:\Github_Projects\10 Apps/'.replace(os.sep , os.altsep))
 data = json.load(open('data.json'))
 
 def keydefinition(key):
-    if key.lower() in data.keys():
+    if key in data.keys():
         return data[key]
+    elif key.lower() in data.keys():
+        return data[key.lower()]
     else:
         if difflib.get_close_matches(key.lower(), data.keys(), cutoff=0.8) != []:
             similar = difflib.get_close_matches(key.lower(), data.keys(), cutoff=0.8)[0].capitalize()
@@ -30,15 +32,14 @@ def keydefinition(key):
 
 
 key = input('Enter a word you would like to translate: ')
+output = keydefinition(key)
 
-keydefinition(key)
-
-if isinstance(keydefinition(key), list):
+if isinstance(output, list):
     print(key.capitalize() + ':')
-    for i in keydefinition(key):
+    for i in output:
         print('\n' + i)
 else:
-    print(keydefinition(key))
+    print(output)
     
 
 
